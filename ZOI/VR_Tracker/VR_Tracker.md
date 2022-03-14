@@ -122,3 +122,83 @@ GPSで地球上の位置を特定できるなら、部屋1つ分の大きさのG
 | :--------------- | --------: | :----------------- |
 | GY-273           | 約 `¥600` | Amazon             |
 | Arduino Pro Mini | `¥1,243`  | スイッチサイエンス |
+
+うーん、予算と比べると高いですね。
+
+## 5. プログラム作成
+
+### 5a. HMD位置の取得
+
+```csharp
+using System;
+using System.Numerics;
+using System.Threading;
+using OVRSharp;
+using OVRSharp.Exceptions;
+using OVRSharp.Math;
+using Valve.VR;
+
+namespace GetHMDLoc
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Application app;
+            try {
+                app = new Application(Application.ApplicationType.Overlay);
+            } catch (OpenVRSystemException<EVRInitError> e) {
+                Console.Error.WriteLine("ERROR : " + e);
+                return;
+            }
+
+            var data = new TrackedDevicePose_t[100];
+
+            while (true)
+            {
+                app.OVRSystem.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0, data);
+
+                var pose = data[0].mDeviceToAbsoluteTracking.ToMatrix4x4();
+
+                Matrix4x4.Decompose(pose, out _, out var rotation, out var translation);
+                Console.Write("translation: " + translation + "\n");
+                Console.Write("rotation: " + rotation + "\n\n");
+                Thread.Sleep(1000);
+            }
+        }
+    }
+}
+```
+
+```plaintext
+...
+
+translation: <-0.12683892, 0.8559739, -0.16179551>
+rotation: {X:-0.063213125 Y:0.060422175 Z:0.9941291 W:0.06372233}
+
+translation: <-0.11176507, 0.8112176, -0.15557235>
+rotation: {X:0.045767996 Y:-0.013111211 Z:0.011232452 W:0.9988029}
+
+translation: <-0.13694595, 0.77720445, -0.17874679>
+rotation: {X:0.04394212 Y:-0.048361007 Z:-0.10624636 W:0.9921905}
+
+translation: <-0.12910175, 0.76790535, -0.18021783>
+rotation: {X:-0.024631226 Y:-0.6703547 Z:0.116061494 W:0.7324941}
+
+translation: <-0.14068504, 0.7605716, -0.17483734>
+rotation: {X:-0.073969394 Y:-0.72898126 Z:0.13557044 W:0.66688496}
+
+translation: <-0.16004422, 0.77059454, -0.17738983>
+rotation: {X:-0.0026735647 Y:0.2116127 Z:0.036148936 W:0.97668123}
+
+translation: <-0.28739393, 0.7082108, -0.05348437>
+rotation: {X:0.20426413 Y:-0.533753 Z:-0.59516805 W:0.5649415}
+
+translation: <-0.26348877, 0.63101333, -0.07291168>
+rotation: {X:0.47536266 Y:-0.5800788 Z:-0.42235678 W:0.50907147}
+
+translation: <-0.26569998, 0.63390434, -0.07184511>
+rotation: {X:0.47831914 Y:-0.5876847 Z:-0.4097854 W:0.5078518}
+
+...
+```
