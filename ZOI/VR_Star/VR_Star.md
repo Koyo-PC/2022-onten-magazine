@@ -77,11 +77,56 @@ zipファイルみたいなものです。
 なので、1ファイルずつの処理になりそうです。
 
 処理を書く言語は何でもいいんですが、今回はC#を使います。
-exeにコンパイルしたら早そうだし(偏見)
 
-詳しくはGitHubレポジトリを見てほしいのですが、大まかなコードは以下のような感じですね。
+詳しくはGitHubのレポジトリ(<https://github.com/ZOI_dayo/>)を見てほしいのですが、流れとしては以下のような感じですね。
 
-```csharp
-```
+1. Gaiaデータ保存ディレクトリ内の全ての`.gz`ファイルに対して`2.`~`4.`を繰り返す
+2. `.gz`ファイルを`byte[]`として読み込み、解凍して`string`に戻す
+(解凍には`GZipStream`を利用)
+3. `2.`でできたcsv形式のstringを`StarData[]`(自作構造体)に変換する
+(`CsvHelper`のマッピング機能を利用)
+4. `StarData[]`から必要な情報のみを抜き取り、場合によっては変換して別のファイルにCSV形式で書き込む
+(ただしHipparcosに含まれているデータは除外)
+5. Hipparcosに対しても繰り返す
 
-<https://github.com/ZOI_dayo/>
+データには本当にいろいろなデータが含まれているのですが、今回は「赤経」「赤緯」「等級」「色指数」というデータだけを使うことにします。
+
+#### 用語解説
+
+赤経 / 赤緯
+: 北極星のあたりを天の北極として天球を考えた時の緯度 / 経度。
+  天球上での星の位置を表します。
+
+等級
+: よく1等星とか2等星とか言ってるやつ。
+  1等級上がると $\sqrt[5]{100}\fallingdotseq2.512$倍の明るさになる。
+  マイナスや小数のときもあります。
+
+色指数
+: 星の色を表す値。
+  今回はB-V色指数を基準にすることにしました。
+  青の光を通すBバンドフィルタを通った光の強さから、緑〜黄の光を通すVバンドフィルタを通った光の強さを引いたものです。
+  Gaia星表は独自のフィルタ(<https://www.cosmos.esa.int/web/gaia/edr3-passbands>)で計測しているので、ESAのページ(<https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_calibr/ssec_cu5pho_PhotTransf.html#Ch5.F15.g3>)にある式が使えそうです。
+  しかし、$G - V$を$B - V$にする関数が欲しいので、これの逆関数ですね。
+  かなりアバウトに計算した結果がこんな感じ(4)です。
+  まあ元々ESAの式に誤差があるので、気にしないことにしましょう。
+  逆関数を計算してくれるサイト(<https://ja.numberempire.com/inversefunctioncalculator.php>)があるので参考にさせてもらいました。
+
+  ```math
+  \begin{align}
+  G - V &= -0.02907 - 0.02385 \times (B - V) - 0.2297 \times (B - V)^2 - 0.001768 \times (B - V)^3 \\
+  &\fallingdotseq -0.029 - 0.024 \times (B - V) - 0.23 \times (B - V)^2 \\
+  \therefore B - V &\fallingdotseq \left\{
+    \begin{array}{ll}
+      {{\sqrt{2}\,\sqrt{-115000\,(G-V)-3263}-12}\over{230}}&(G-V \leq -\frac{3263}{115000}) \\
+      -\frac{12}{230}&(G-V > -\frac{3263}{115000})
+    \end{array}
+  \right.\\
+  &\fallingdotseq \left\{
+    \begin{array}{ll}
+      {{8\sqrt{-36\,(G-V)-1}-1}\over{23}}&(G-V \leq -\frac{1}{36}) \\
+      -\frac{1}{23}&(G-V > -\frac{1}{36})
+    \end{array}
+  \right.
+  \end{align}
+  ```
