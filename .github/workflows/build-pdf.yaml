@@ -8,7 +8,7 @@ jobs:
       - run: sudo rm -rf /var/lib/apt/lists/*
       - run: sudo apt-get update
       - run: sudo apt-get install -y pandoc wkhtmltopdf
-      - run: sudo ./assets/build.sh
+      - run: sudo sh ./assets/build.sh
       - uses: actions/upload-artifact@master
         with:
           name: curriculum-vitae
