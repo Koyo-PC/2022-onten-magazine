@@ -5,9 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: sudo rm -rf /var/lib/apt/lists/*
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y pandoc
+      - run: sudo sh ./assets/install-pandoc.sh
       - run: sudo sh ./assets/install-wkhtmltopdf.sh
       - run: sudo sh ./assets/build.sh
       - uses: actions/upload-artifact@master
