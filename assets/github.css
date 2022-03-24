@@ -7,8 +7,8 @@ h1 {
 }
 
 body {
-  font-family: 'Source Han Sans JP';
-  /* font-family: 'Noto Sans JP'; */
+  /* font-family: 'Source Han Sans JP'; */
+  font-family: 'Noto Sans JP';
   font-style: normal;
   font-weight: 300;
   font-size: 14px;
@@ -260,7 +260,8 @@ code, tt {
   border-radius: 3px; }
 
 pre code {
-  font-family: 'Source Han Code JP';
+  /* font-family: 'Source Han Code JP'; */
+  font-family: 'Source Code Pro';
   margin: 0;
   padding: 0;
   white-space: pre;
