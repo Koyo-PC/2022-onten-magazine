@@ -1,14 +1,14 @@
 name: Build PDF
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Build-PDF:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: sudo rm -rf /var/lib/apt/lists/*
       - run: sudo apt-get update
       - run: sudo apt-get install -y pandoc wkhtmltopdf
-      - run: ./assets/build.sh
+      - run: sudo ./assets/build.sh
       - uses: actions/upload-artifact@master
         with:
           name: curriculum-vitae
