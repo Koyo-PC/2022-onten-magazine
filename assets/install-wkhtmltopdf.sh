@@ -1,5 +1,4 @@
-git clone git://github.com/antialize/wkhtmltopdf.git ./temp/wkhtmltopdf
 cd ./temp/wkhtmltopdf
-../wkqt/bin/qmake
-make -j3
-make install
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb
+sudo apt install ./wkhtmltox_0.12.6-1.focal_amd64.deb
+cd ../../

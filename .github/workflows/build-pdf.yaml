@@ -8,11 +8,9 @@ jobs:
       - run: sudo rm -rf /var/lib/apt/lists/*
       - run: sudo apt-get update
       - run: sudo apt-get install -y pandoc
-      - run: sudo apt-get --purge remove wkhtmltopdf
-      - run: sudo sh ./assets/install-qt.sh
       - run: sudo sh ./assets/install-wkhtmltopdf.sh
       - run: sudo sh ./assets/build.sh
       - uses: actions/upload-artifact@master
         with:
-          name: curriculum-vitae
+          name: exported document
           path: out/output.pdf
