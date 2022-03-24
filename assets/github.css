@@ -261,7 +261,7 @@ code, tt {
 
 pre code {
   /* font-family: 'Source Han Code JP'; */
-  font-family: 'Source Code Pro';
+  font-family: 'Source Code Pro', monospace, 'Noto Sans JP';
   margin: 0;
   padding: 0;
   white-space: pre;
