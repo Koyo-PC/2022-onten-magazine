@@ -14,7 +14,9 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: html
-          path: out/output.html
+          path: |
+            out/output.html
+            out/*.css
       - run: sudo sh ./assets/build-pdf.sh
       - uses: actions/upload-artifact@master
         with:
