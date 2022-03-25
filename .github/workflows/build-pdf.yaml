@@ -9,8 +9,14 @@ jobs:
       - uses: actions/checkout@v2
       - run: sudo sh ./assets/install-pandoc.sh
       - run: sudo sh ./assets/install-wkhtmltopdf.sh
-      - run: sudo sh ./assets/build.sh
+      - run: mkdir ./out
+      - run: sudo sh ./assets/build-html.sh
       - uses: actions/upload-artifact@master
         with:
-          name: exported document
-          path: out/
+          name: html
+          path: out/output.html
+      - run: sudo sh ./assets/build-pdf.sh
+      - uses: actions/upload-artifact@master
+        with:
+          name: pdf
+          path: out/output.pdf

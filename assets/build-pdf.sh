@@ -1,0 +1,1 @@
+sudo wkhtmltopdf ./out/output.html toc --toc-header-text 目次 --xsl-style-sheet ./assets/toc.xsl --enable-local-file-access ./out/output.pdf
