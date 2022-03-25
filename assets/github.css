@@ -262,7 +262,7 @@ code, tt {
   border-radius: 3px; }
 
 pre code {
-  font-family: 'Ricty Diminished Discord Fixed';
+  /* font-family: 'Ricty Diminished Discord Fixed'; */
   margin: 0;
   padding: 0;
   white-space: pre;
@@ -279,6 +279,7 @@ pre code {
   border-radius: 3px; }
 
 pre {
+  font-family: 'Ricty Diminished Discord Fixed';
   background-color: #f8f8f8;
   border: 1px solid #cccccc;
   font-size: 13px;
