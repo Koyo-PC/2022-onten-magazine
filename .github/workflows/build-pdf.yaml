@@ -13,4 +13,4 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: exported document
-          path: out/output.pdf
+          path: out/
