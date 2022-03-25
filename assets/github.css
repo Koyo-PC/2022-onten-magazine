@@ -279,7 +279,6 @@ pre code {
   border-radius: 3px; }
 
 pre {
-  font-family: 'Ricty Diminished Discord Fixed';
   background-color: #f8f8f8;
   border: 1px solid #cccccc;
   font-size: 13px;
@@ -290,3 +289,5 @@ pre {
   pre code, pre tt {
     background-color: transparent;
     border: none; }
+code {
+  font-family: 'Ricty Diminished Discord Fixed'}
