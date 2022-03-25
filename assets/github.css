@@ -8,7 +8,7 @@ h1 {
 
 body {
   /* font-family: 'Source Han Sans JP'; */
-  font-family: 'Noto Sans JP';
+  /* font-family: 'Noto Sans JP'; */
   font-style: normal;
   font-weight: 300;
   font-size: 14px;
@@ -17,6 +17,12 @@ body {
   padding-bottom: 10px;
   background-color: white;
   padding: 30px; }
+
+body :not(pre *) {
+  font-family: 'Noto Sans JP', sans-serif;}
+
+pre * {
+  font-family: 'Source Code Pro', monospace;}
 
 body > *:first-child {
   margin-top: 0 !important; }
@@ -261,7 +267,7 @@ code, tt {
 
 pre code {
   /* font-family: 'Source Han Code JP'; */
-  font-family: 'Source Code Pro', monospace, 'Noto Sans JP' !important;
+  /* font-family: 'Source Code Pro', monospace, 'Noto Sans JP' !important; */
   margin: 0;
   padding: 0;
   white-space: pre;
