@@ -26,7 +26,6 @@ body > *:last-child {
   margin-bottom: 0 !important; }
 
 a {
-  white-space: normal;
   color: #4183C4; }
 a.absent {
   color: #cc0000; }
