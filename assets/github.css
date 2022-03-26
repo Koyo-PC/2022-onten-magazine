@@ -26,6 +26,7 @@ body > *:last-child {
   margin-bottom: 0 !important; }
 
 a {
+  word-wrap: break-word;
   color: #4183C4; }
 a.absent {
   color: #cc0000; }
