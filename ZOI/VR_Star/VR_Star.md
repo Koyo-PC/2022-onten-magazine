@@ -112,7 +112,7 @@ zipファイルみたいなものです。
   まあ元々ESAの式に誤差があるので、気にしないことにしましょう。
   逆関数を計算してくれるサイト(<https://ja.numberempire.com/inversefunctioncalculator.php>)があるので参考にさせてもらいました。
 
-  ```math
+  $$
   \begin{align}
   G - V &= -0.02907 - 0.02385 \times (B - V) - 0.2297 \times (B - V)^2 - 0.001768 \times (B - V)^3 \\
   &\fallingdotseq -0.029 - 0.024 \times (B - V) - 0.23 \times (B - V)^2 \\
@@ -129,4 +129,4 @@ zipファイルみたいなものです。
     \end{array}
   \right.
   \end{align}
-  ```
+  $$

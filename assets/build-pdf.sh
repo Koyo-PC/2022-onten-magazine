@@ -1,3 +1,5 @@
+cp ./assets/github.css ./out/github.css
+cp ./assets/wk.css ./out/wk.css
 cp ./assets/toc.xsl ./out/toc.xsl
 cd ./out/
 mdpath=($(find ../ -name "*.md"))
