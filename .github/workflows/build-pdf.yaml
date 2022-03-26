@@ -1,0 +1,22 @@
+name: Build PDF
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  Build-PDF:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo sh ./assets/install-pandoc.sh
+      - run: sudo sh ./assets/install-wkhtmltopdf.sh
+      - run: mkdir ./out
+      - run: sudo sh ./assets/build-html.sh
+      - uses: actions/upload-artifact@master
+        with:
+          name: html
+          path: out/
+      - run: sudo sh ./assets/build-pdf.sh
+      - uses: actions/upload-artifact@master
+        with:
+          name: pdf
+          path: out/output.pdf
