@@ -39,7 +39,7 @@ Webページにリンクが並んでいるので、今回はLinuxのwgetの`-r`�
 ```bash
 #!/bin/sh
 cd "/mnt/f/Gaia EDR3/data/"
-wget -r --no-parent --continue http://cdn.gea.esac.int/Gaia/gedr3/gaia_source/
+wget -r --no-parent --continue http://cdn.gea.esac.esa.int/Gaia/gedr3/gaia_source/
 read -p "Press [Enter] key to resume."
 ```
 
@@ -70,22 +70,14 @@ Gaiaと比べると小さく思えますが、一文字=1byteなので2億3千�
 後で描画するときにデータを読み込むのですが、その時のファイルサイズはできるだけ小さい方が早くなります。
 というわけで、データの必要な部分だけを別のファイルにコピーしていきましょう。
 
-ダウンロードしたデータを見てみると、ファイル名が`.gz`で終わっていると思います。
-`.gz`なんて知らないぞ? という方も多いと思いますが、圧縮ファイルの一種です。
-zipファイルみたいなものです。
-ここで問題なのは、圧縮されたままでは中のデータを参照できないこと、そして解凍したらさらに容量を食うことです。
-なので、1ファイルずつの処理になりそうです。
-
-処理を書く言語は何でもいいんですが、今回はC#を使います。
-
-詳しくはGitHubのレポジトリ(<https://github.com/ZOI_dayo/>)を見てほしいのですが、流れとしては以下のような感じですね。
+全体的な流れとしては以下のような感じですね。
 
 1. Gaiaデータ保存ディレクトリ内の全ての`.gz`ファイルに対して`2.`~`4.`を繰り返す
 2. `.gz`ファイルを`byte[]`として読み込み、解凍して`string`に戻す
 (解凍には`GZipStream`を利用)
-3. `2.`でできたcsv形式のstringを`StarData[]`(自作構造体)に変換する
-(`CsvHelper`のマッピング機能を利用)
-4. `StarData[]`から必要な情報のみを抜き取り、場合によっては変換して別のファイルにCSV形式で書き込む
+3. `2.`でできたcsv形式のstringを`StarData[]`(自作クラス)に変換する
+(必要な情報のみ)
+4. `StarData[]`を別のファイルにCSV形式で書き込む
 (ただしHipparcosに含まれているデータは除外)
 5. Hipparcosに対しても繰り返す
 
@@ -106,27 +98,96 @@ zipファイルみたいなものです。
 : 星の色を表す値。
   今回はB-V色指数を基準にすることにしました。
   青の光を通すBバンドフィルタを通った光の強さから、緑〜黄の光を通すVバンドフィルタを通った光の強さを引いたものです。
-  Gaia星表は独自のフィルタ(<https://www.cosmos.esa.int/web/gaia/edr3-passbands>)で計測しているので、ESAのページ(<https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_calibr/ssec_cu5pho_PhotTransf.html#Ch5.F15.g3>)にある式が使えそうです。
-  しかし、$G - V$を$B - V$にする関数が欲しいので、これの逆関数ですね。
-  かなりアバウトに計算した結果がこんな感じ(4)です。
-  まあ元々ESAの式に誤差があるので、気にしないことにしましょう。
-  逆関数を計算してくれるサイト(<https://ja.numberempire.com/inversefunctioncalculator.php>)があるので参考にさせてもらいました。
 
-  $$
-  \begin{aligned}
-  G - V &= -0.02907 - 0.02385 \times (B - V) - 0.2297 \times (B - V)^2 - 0.001768 \times (B - V)^3 \\
-  &\fallingdotseq -0.029 - 0.024 \times (B - V) - 0.23 \times (B - V)^2 \\
-  \therefore B - V &\fallingdotseq \left\{
-    \begin{array}{ll}
-      {{\sqrt{2}\,\sqrt{-115000\,(G-V)-3263}-12}\over{230}}&(G-V \leq -\frac{3263}{115000}) \\
-      -\frac{12}{230}&(G-V > -\frac{3263}{115000})
-    \end{array}
-  \right.\\
-  &\fallingdotseq \left\{
-    \begin{array}{ll}
-      {{8\sqrt{-36\,(G-V)-1}-1}\over{23}}&(G-V \leq -\frac{1}{36}) \\
-      -\frac{1}{23}&(G-V > -\frac{1}{36})
-    \end{array}
-  \right.
-  \end{aligned}
-  $$
+#### データの変換
+
+色指数について、Gaia星表は独自のフィルタ(<https://www.cosmos.esa.int/web/gaia/edr3-passbands>)で計測しているので、B-V色指数への変換が必要です。
+ESAのページ(<https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_calibr/ssec_cu5pho_PhotTransf.html#Ch5.F11>)にある式が使えそうです。
+$G, G_{BP}, G_{RP}$を$B - V$にする関数はないのですが、$G_{BP}-G_{RP}$から$G-H_P$、$G-H_P$から$B-V$にする関数は作れそうです。
+ただ、$G-H_P$から$B-V$にする関数のグラフの右下の方があまり信用できないので、逆関数にするついでに、なんとなくで式を作ってみました。
+$$
+\left\{
+  \begin{array}{ll}
+    -2.4y-0.075 &(y \geq -0.5) \\
+    -2.1y^2-4.2y-0.45 &(y < -0.5)
+  \end{array}
+\right.
+$$
+
+こんな適当な式でちゃんと動くのか?って感じもしますが、グラフ書いてみたらそれっぽかったのでまあ大丈夫でしょう。
+
+![](./Assets/Gaia-BV_Graph/out.svg)
+
+(目盛りが2つあるのは、元のグラフを画像として取り込んで、その上にグラフを書いているからです。)
+
+#### いざ変換
+
+処理を書く言語は何でもいいんですが、今回はC#を使います。
+
+というわけで、早速コードです。
+
+```csharp
+public class DataExtractor {
+  private const OUT_FILE = @"path¥to¥File.csv";
+  private const GAIA_PATH = @"path¥to¥Gaia¥";
+
+  public static void Main() {
+    using (var outFStream = File.Open(OUT_FILE, FileMode.OpenOrCreate)) {
+      string[] gaiaFiles = GetGaiaFiles();
+      foreach (string gaiaFile in gaiaFiles) {
+        using (var fStream = File.OpenRead(GAIA_PATH + gaiaFile))
+        using (var gStream = new GZipStream(fStream, CompressionMode.Decompress))
+        using (var reader = new StreamReader(gStream)) {
+          bool isFirstLine = true;
+          while (reader.EndOfStream == false) {
+            // 1行目はタイトルなのでスキップする
+            if(isFirstLine) {
+              isFirstLine = false;
+              continue;
+            }
+            string line = sr.ReadLine();
+            string[] strData = line.Split(',')
+            outFStream.WriteLine(StarData.FromGaiaProperty(strData[5], strData[7], strData[69], strData[74], strData[79]).ToString());
+          }
+        }
+      }
+    }
+  }
+
+  private static string[] GetGaiaFiles() {
+    // 今回は、一緒にダウンロードした_MD5SUM.txtからファイル名を抜き出して使います
+    StreamReader sr = new StreamReader(GAIA_PATH + "_MD5SUM.txt");
+    string md5sumContent = sr.ReadToEnd();
+    sr.Close();
+    return md5sumContent.Split('¥n').map(s => s.Split(' ')[1]);
+  }
+}
+private class StarData {
+  public final float Ra;      // 赤経
+  public final float Dec;     // 赤緯
+  public final float VMag;    // 等級
+  public final float BVColor; // 色指数
+
+  public StarData(float ra, float dec, float vmag, float bvcolor) {
+    this.Ra = ra;
+    this.Dec = dec;
+    this.VMag = vmag;
+    this.BVColor = bvcolor;
+  }
+
+  public static StarData FromGaiaProperty(float ra, float dec, float phot_g_mean_mag, float phot_bp_mean_mag, float phot_rp_mean_mag) {
+    float G_HP = 0.0149 * Math.Pow(phot_bp_mean_mag - phot_rp_mean_mag, 3)
+      - 0.12 * Math.Pow(phot_bp_mean_mag - phot_rp_mean_mag, 2)
+      - 0.2344 * (phot_bp_mean_mag - phot_rp_mean_mag)
+      - 0.01968;
+    float bvcolor = -0.5 <= G_HP
+      ? bvcolor = - 2.4 * G_HP - 0.075
+      : bvcolor = - 2.1 * Math.Pow(G_HP, 2) - 4.2 * G_HP - 0.45;
+    return StarData(ra, dec, phot_g_mean_mag, bvcolor);
+  }
+
+  public string ToString() {
+    return $"{Ra}, {Dec}, {VMag}, {BVColor}";
+  }
+}
+```
