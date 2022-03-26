@@ -2,9 +2,9 @@ cp ./assets/github.css ./out/github.css
 cp ./assets/wk.css ./out/wk.css
 cp ./assets/toc.xsl ./out/toc.xsl
 mkdir ./out/Assets
-assets=($(find ../ -name "Assets" -type d))
+assets=($(find ./ -name "Assets" -type d))
 for assetfolder in ${assets[@]}; do
-  cp -r $assetfolder ./out/Assets
+  cp -r $assetfolder ./out/
 done
 cd ./out/
 mdpath=($(find ../ -name "*.md"))
