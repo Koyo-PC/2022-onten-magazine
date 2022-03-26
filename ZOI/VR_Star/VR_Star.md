@@ -113,7 +113,7 @@ zipファイルみたいなものです。
   逆関数を計算してくれるサイト(<https://ja.numberempire.com/inversefunctioncalculator.php>)があるので参考にさせてもらいました。
 
   $$
-  \begin{align}
+  \begin{aligned}
   G - V &= -0.02907 - 0.02385 \times (B - V) - 0.2297 \times (B - V)^2 - 0.001768 \times (B - V)^3 \\
   &\fallingdotseq -0.029 - 0.024 \times (B - V) - 0.23 \times (B - V)^2 \\
   \therefore B - V &\fallingdotseq \left\{
@@ -128,5 +128,5 @@ zipファイルみたいなものです。
       -\frac{1}{23}&(G-V > -\frac{1}{36})
     \end{array}
   \right.
-  \end{align}
+  \end{aligned}
   $$
