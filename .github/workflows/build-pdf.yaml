@@ -10,11 +10,11 @@ jobs:
       - run: sudo bash ./assets/install-pandoc.sh
       - run: sudo bash ./assets/install-wkhtmltopdf.sh
       - run: mkdir ./out
-      - run: sudo bash ./assets/build-html.sh
-      - uses: actions/upload-artifact@master
-        with:
-          name: html
-          path: out/
+      # - run: sudo bash ./assets/build-html.sh
+      # - uses: actions/upload-artifact@master
+      #   with:
+      #     name: html
+      #     path: out/
       - run: sudo bash ./assets/build-pdf.sh
       - uses: actions/upload-artifact@master
         with:
