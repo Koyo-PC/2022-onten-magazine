@@ -1,0 +1,23 @@
+@startuml DataExtractor.svg
+title DataExtractor
+namespace DataExtractor {
+    class DataExtractor {
+        OutFile: string
+        GaiaPath: string
+        HipPath: string
+        CrossMatchPath: string
+
+        Main(): void
+        GetGaiaFiles(): IEnumerable<string>
+    }
+    class StarData {
+        _ra: double
+        _dec: double
+        _vMag: float
+        _bvColor: float
+
+        FromGaiaProperty(ra: double, dec: double , g: float , bp: float , rp: float): StarData
+        ToByte(): byte[]
+    }
+}
+@enduml
