@@ -1,0 +1,2 @@
+- AIは統計学から　https://zenn.dev/nekoallergy/articles/stat-basic-overview01
+- 
