@@ -120,7 +120,7 @@ $$
 
 こんな適当な式でちゃんと動くのか?って感じもしますが、グラフ書いてみたらそれっぽかったのでまあ大丈夫でしょう。
 
-![](./Assets/Gaia-BV_Graph/out.svg)
+![](./Assets/Gaia-BV_Graph/out.png)
 
 (目盛りが2つあるのは、元のグラフを画像として取り込んで、その上にグラフを書いているからです。)
 
@@ -130,9 +130,10 @@ $$
 
 コードをここに書くと流石に長すぎるので、ここではUMLだけ載せておきます。
 コード本体はGitHub(<https://github.com/ZOI-dayo/VR_Star_DataExtractor>)にあります。
+
 |クラス図|アクティビティ図|
 | :----: | :------------: |
-| ![](./Assets/UML/DataExtractor/DataExtractor_Class.svg) | ![](./Assets/UML/DataExtractor/DataExtractor_Activity.svg) |
+| ![DataExtractor クラス図](./Assets/UML/DataExtractor/DataExtractor_Class.svg) | ![DataExtractor アクティビティ図](./Assets/UML/DataExtractor/DataExtractor_Activity.svg) |
 
 見ての通り簡単なコードです。
 ファイルが2つに分かれているのですが、合わせても170行しかないです。
