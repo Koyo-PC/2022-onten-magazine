@@ -131,9 +131,10 @@ $$
 コードをここに書くと流石に長すぎるので、ここではUMLだけ載せておきます。
 コード本体はGitHub(<https://github.com/ZOI-dayo/VR_Star_DataExtractor>)にあります。
 
-|クラス図|アクティビティ図|
-| :----: | :------------: |
-| ![DataExtractor クラス図](./Assets/UML/DataExtractor/DataExtractor_Class.svg) | ![DataExtractor アクティビティ図](./Assets/UML/DataExtractor/DataExtractor_Activity.svg) |
+<p>
+  <img src="./Assets/UML/DataExtractor/DataExtractor_Class.png" width="81.291%" />
+  <img src="./Assets/UML/DataExtractor/DataExtractor_Activity.png" width="18.709%" />
+</p>
 
 見ての通り簡単なコードです。
 ファイルが2つに分かれているのですが、合わせても170行しかないです。
