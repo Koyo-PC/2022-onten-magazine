@@ -1,23 +1,109 @@
-@startuml DataExtractor.svg
-title DataExtractor
+@startuml DataExtractor_Class.svg
+title DataExtractor(クラス図)
 namespace DataExtractor {
     class DataExtractor {
-        OutFile: string
-        GaiaPath: string
-        HipPath: string
-        CrossMatchPath: string
+        - const OutFile: string
+        - const GaiaPath: string
+        - const HipPath: string
+        - const CrossMatchPath: string
 
         Main(): void
         GetGaiaFiles(): IEnumerable<string>
     }
     class StarData {
-        _ra: double
-        _dec: double
-        _vMag: float
-        _bvColor: float
+        - readonly _ra: double
+        - readonly _dec: double
+        - readonly _vMag: float
+        - readonly _bvColor: float
 
         FromGaiaProperty(ra: double, dec: double , g: float , bp: float , rp: float): StarData
         ToByte(): byte[]
     }
+
+    DataExtractor "1" .down.> "0..1" StarData
+
+    note top of DataExtractor
+        解凍/データの抽出/出力 をしているクラス
+    end note
+    note left of DataExtractor::OutFile
+        データ出力先ファイル
+    end note
+    note left of DataExtractor::GaiaPath
+        Gaiaデータの保存場所
+    end note
+    note left of DataExtractor::HipPath
+        Hipparcosデータファイル
+    end note
+    note left of DataExtractor::CrossMatchPath
+        Gaia-HipのCrossMatchファイル
+    end note
+    note right of DataExtractor::Main
+        大体の処理がここ
+        Gaiaの処理、Hipの処理で大きく2回ループがある
+    end note
+    note right of DataExtractor::GetGaiaFiles
+        _MD5SUM.txtからGaiaデータのファイル名を取得
+    end note
+
+    note bottom of StarData
+        データの変換をしているクラス
+        コンストラクタにra,dec,vMag,bvColorをとる
+    end note
+    note left of StarData::_ra
+        赤経
+    end note
+    note left of StarData::_dec
+        赤緯
+    end note
+    note left of StarData::_vMag
+        等級
+    end note
+    note left of StarData::_bvColor
+        B-V色指数
+    end note
+    note right of StarData::FromGaiaProperty
+        GaiaデータからStarDataを作成
+    end note
+    note right of StarData::ToByte
+        StarDataをバイト配列に変換
+    end note
 }
+@enduml
+@startuml DataExtractor_Activity.svg
+title DataExtractor(アクティビティ図)
+|DataExtractor|
+start
+:開始;
+:クロスマッチ情報を読み取り記録;
+:Gaiaファイル名一覧を取得;
+|DataExtractor|
+while (それぞれのファイル名に対して)
+    :Gaiaファイルを読み込み;
+    while (全ての行に対して)
+        :データ読み込み;
+        |StarData|
+        :B-V色指数を計算;
+        :byte[]に変換;
+        |DataExtractor|
+        :ファイルに書き込み;
+        if (クロスマッチに含まれているか?) then (yes)
+            :読み込み済みとして記録;
+        else (no)
+        endif
+    endwhile
+endwhile
+:Hipparcosデータ読み込み;
+while (全ての行に対して)
+    :データ読み込み;
+    |StarData|
+    :byte[]に変換;
+    |DataExtractor|
+    if (読み込み済みとして記録されているか?) then (no)
+        :ファイルに書き込み;
+    else (yes)
+    endif
+endwhile
+:終了;
+stop
+
 @enduml
