@@ -1,8 +1,14 @@
 cd out
-wget https://gist.githubusercontent.com/jepio/3ecaa6bba2a53ff74f2e/raw/6d1af4c74085c3d3f8995c4f9396bb5eaf278b82/minted.py
-# pandoc pandoc -s --filter ./minted.py ../**/*.md -o output.tex -f markdown -t latex -V documentclass=bxjsarticle -V classoption=pandoc
-pandoc -s ../**/*.md -o output.tex -f markdown -t latex -V documentclass=bxjsarticle -V classoption=pandoc
-lualatex output.tex
+
+### Minted
+
+# sudo apt install -y python3-pip
+# pip install pygments
+# pip install pandocfilters
+# wget https://raw.githubusercontent.com/nick-ulle/pandoc-minted/master/pandoc-minted.py
+# pandoc -s --filter ./pandoc-minted.py ../**/**/*.md -o output.tex -f markdown -t latex --pdf-engine lualatex --pdf-engine-opt=--shell-escape --pdf-engine-opt="-aux-directory=temp" -V documentclass=bxjsarticle -V classoption=pandoc -H ../assets/header.tex -o output.pdf
+
+pandoc -s ../**/**/*.md -o output.tex -f markdown -t latex --pdf-engine lualatex -V documentclass=bxjsarticle -V classoption=pandoc -H ../assets/header.tex -o output.pdf
 
 #cp ./assets/github.css ./out/github.css
 #cp ./assets/wk.css ./out/wk.css

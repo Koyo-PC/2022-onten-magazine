@@ -12,10 +12,10 @@ jobs:
       # - run: sudo bash ./assets/install-pandoc.sh
       - run: sudo apt install -y pandoc
       # - run: sudo bash ./assets/install-tex.sh
-      - run: sudo apt install -y texlive-lang-japanese texlive-luatex texlive-latex-recommended
+      - run: sudo apt install -y texlive-lang-japanese texlive-luatex texlive-latex-extra texlive-fonts-recommended cm-super #texlive-latex-recommended
       - run: mkdir ./out
       - run: sudo bash ./assets/build-pdf.sh
-      # - uses: actions/upload-artifact@master
-      #   with:
-      #     name: pdf
-      #     path: out/
+      - uses: actions/upload-artifact@master
+        with:
+          name: pdf
+          path: out/
