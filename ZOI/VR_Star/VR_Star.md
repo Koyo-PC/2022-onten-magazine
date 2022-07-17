@@ -52,7 +52,7 @@ GitHubってのは一種のSNSなのですが、「他人が作ったプロジ�
 あとの使い方はmisohenaさんのプロジェクトと全く同じです。
 なんやかんやしてできた画像がこちら。
 
-![](./Assets/drawstars/output.png)
+<!-- ![](https://github.com/ZOI-dayo/VRCStarWorld/blob/main/Assets/Stars/output.png?raw=true) -->
 
 どう見ても星空ですね。
 天の川がぐにゃぐにゃなのは正距円筒図法という書き方だからです。
