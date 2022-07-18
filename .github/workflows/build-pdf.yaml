@@ -7,16 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: sudo sh ./assets/install-pandoc.sh
-      - run: sudo sh ./assets/install-wkhtmltopdf.sh
+      - run: sudo apt update -y
+      - run: sudo apt upgrade -y
+      # - run: sudo bash ./assets/install-pandoc.sh
+      - run: sudo apt install -y pandoc
+      # - run: sudo bash ./assets/install-tex.sh
+      - run: sudo apt install -y texlive-lang-japanese texlive-luatex texlive-latex-extra texlive-fonts-recommended cm-super #texlive-latex-recommended
       - run: mkdir ./out
-      - run: sudo sh ./assets/build-html.sh
-      - uses: actions/upload-artifact@master
-        with:
-          name: html
-          path: out/
-      - run: sudo sh ./assets/build-pdf.sh
+      - run: sudo bash ./assets/build-pdf.sh
       - uses: actions/upload-artifact@master
         with:
           name: pdf
-          path: out/output.pdf
+          path: out/

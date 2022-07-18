@@ -46,6 +46,8 @@ Gitの素晴らしさは[これ](https://github.com/zenn-dev/zenn-docs/pull/29/f
 
 インストール方法は以下の通りです。入ってる人は[ここ](#2-リポジトリのクローン)まで読み飛ばしてください。
 
+GitをGUIで触りたいって人は、`GitHub Desktop`とか`SourceTree`とか`GitKraken`とか検索しましょう。(GitKrakenはGitHub学割のおまけでついてきます。)エディタに内蔵されてることもあります。
+
 #### Windows
 
 1. [Gitのダウンロードページ](https://git-scm.com/download/win)にアクセス
