@@ -11,7 +11,7 @@ jobs:
       - run: sudo apt install nodejs
       - run: npm i md-to-pdf -g
       - run: mkdir ./out
-      - run: md-to-pdf ./**/*.md --css Assets/github.css > out/output.pdf
+      - run: cat ZOI/VR_Tracker/VR_Tracker.md | md-to-pdf --css Assets/github.css > out/output.pdf
       - uses: actions/upload-artifact@master
         with:
           name: pdf
