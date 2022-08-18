@@ -270,3 +270,10 @@ Shader "Unlit/Sky"
 視線ベクトルをクォータニオンで回転させているのがポイントです。
 
 // ログにとっておいた動画を参考にしながら書く
+
+// 電子工作
+//fritzing
+//パーツ
+// リレー: https://forum.fritzing.org/t/srd-05vdc-sl-c-search/11945/4
+// esp: https://ht-deko.com/delphiforum/?vasthtmlaction=viewtopic&t=1971.0#postid-3341s
+// DCジャック: https://github.com/brucetsao/fritzing-parts-1/blob/master/akizuki-DC%E3%82%B8%E3%83%A3%E3%83%83%E3%82%AF/Akizuki-Power%20plug-2.5-DIP.fzpz
