@@ -5,16 +5,14 @@ on:
 jobs:
   Build-PDF:
     runs-on: ubuntu-latest
+    container:
+      image: node:alpine
     steps:
       - uses: actions/checkout@v2
-      - run: sudo apt update -y
-      - run: sudo apt upgrade -y
-      # - run: sudo bash ./assets/install-pandoc.sh
-      - run: sudo apt install -y pandoc
-      # - run: sudo bash ./assets/install-tex.sh
-      - run: sudo apt install -y texlive-lang-japanese texlive-luatex texlive-latex-extra texlive-fonts-recommended cm-super #texlive-latex-recommended
+      - run: apk add chromium
+      - run: npm i mdpdf -g
       - run: mkdir ./out
-      - run: sudo bash ./assets/build-pdf.sh
+      - run: cat files.txt | sed -z -e 's/\r//g' | xargs -I {file} mdpdf {file} -o out/{file}.md
       - uses: actions/upload-artifact@master
         with:
           name: pdf
