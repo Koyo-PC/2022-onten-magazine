@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt update
-      - run: apt i chromium node
+      - run: sudo apt install chromium node
       - run: npm i md-to-pdf -g
       - run: mkdir ./out
       - run: cat files.txt | md-to-pdf > out/output.pdf
