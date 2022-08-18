@@ -9,9 +9,9 @@ jobs:
       - uses: actions/checkout@v2
       - run: sudo apt update
       - run: sudo apt install nodejs
-      - run: npm i md-to-pdf -g
+      - run: npm install -g markdown-pdf --ignore-scripts
       - run: mkdir ./out
-      - run: cat ZOI/VR_Tracker/VR_Tracker.md | md-to-pdf --css https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css > out/output.pdf
+      - run: markdown-pdf ZOI/VR_Tracker/VR_Tracker.md -o out/output.pdf
       - uses: actions/upload-artifact@master
         with:
           name: pdf
