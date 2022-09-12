@@ -31,19 +31,9 @@
 先述のパソコンが届いた。
 
 7月<br>
-このころ105回生は中2となり、地理の授業でケッペンの気候区分を習っていたので、気候区分を判定するプログラムを書いてパソコンに判定させるのが流行った。
-
-※参考<br>
-| <span style="color:red;">熱帯A</span> | <span style="color:orange;">乾燥帯B</span> | <span style="color:lime;">温帯C</span> | <span style="color:skyblue;">亜寒帯D</span> | <span style="color:blue;">寒帯E |
-|-------|---------|-------|---------|-------|
-| <span style="color:red;">Af</span> 熱帯雨林気候| <span style="color:orange;">BS</span> ステップ気候 | <span style="color:lime;">Cw</span> 温暖冬季少雨気候 | <span style="color:skyblue;">Df</span> 亜寒帯湿潤気候 | <span style="color:blue;">ET</span> ツンドラ気候 |
-| <span style="color:red;">Am</span> 弱い乾季のある熱帯雨林気候 | <span style="color:orange;">BW</span> 砂漠気候 | <span style="color:lime;">Cs</span> 地中海性気候 | <span style="color:skyblue;">Dw</span> 亜寒帯冬季少雨気候 | <span style="color:blue;">EF</span> 氷雪気候 |
-| <span style="color:red;">Aw</span> サバナ気候 | | <span style="color:lime;">Cfa</span> 温暖湿潤気候 | | |
-| | | <span style="color:lime;">Cfb</span> 西岸海洋性気候 | | |
-
-<br>
+このころ105回生は中2となり、地理の授業でケッペンの気候区分を習っていたので、気候区分を判定するプログラムを書いてパソコンに判定させるのが流行った。<br>
 先に30を行った方が勝ちになるゲームをいろいろな言語で作った。<br>
-五目並べ、オセロ、マイクラのmod、ホームページなども作った。<br><br>
+五目並べ、オセロ、マイクラのmod、ホームページなども作った。<br>
 
 11月<br>
 初めての音展となった。
@@ -151,7 +141,7 @@ PC部のロッカーはおそらくどこかの団体に渡されたと思う。
 高校の音展は通常9月だが、この年は延期となって11月開催となった。
 
 10月<br>
-数学でベクトルを習ったのでプログラミングがやりやすくなった。<br>
+数学でベクトルを習った<br>
 ある部員はベクトルを使ってお絵描きができるプログラムを書いた。<br>
 また[ウェブデザイン技能検定](https://www.webdesign.gr.jp/)(3級)に合格した部員もいた。<br>
 webコンのためにある部員はMarkdownという言語をホームページなどで使われる<br>
@@ -179,11 +169,11 @@ webコンに関しては最初の審査まで時間がなかったため、11月
 
 12月<br>
 PC部員3名はポートアイランドの理化学研究所にある[富嶽](https://www.fujitsu.com/jp/about/businesspolicy/tech/fugaku/)を使ってプログラミングができる会に参加した。<br>
-~~とは言ってももちろんごく一部しか使えないが~~<br>
+~~とは言っても使うのは富嶽のごく一部だが~~<br>
 冊子の小問の誘導に沿ってプログラムを組んでいくことで素数ゼミ[(wiki)](https://ja.wikipedia.org/wiki/%E5%91%A8%E6%9C%9F%E3%82%BC%E3%83%9F)の謎を解こうという<br>
-形式だった。そこそこ難しかった。<br>
+形式だった。そこそこ大変だった。<br>
 富嶽を使えば並列して多くのの処理を同時に行えるので普通のパソコンでは到底終わらない計算量でも数十秒でできた。<br>
-当日は正月前で、多くの研究者が休暇中に計算してもらえるよう富嶽の予約を入れていたので<br>
+当日は正月前で、多くの研究者が休暇中に計算してもらえるよう富嶽の予約を入れていたので
 なかなか順番が回ってこなかった。<br>
 また、NHKの取材が入り、部員の一人のインタビューが放送された。<br>
 
@@ -202,12 +192,12 @@ PC部員3名はポートアイランドの理化学研究所にある[富嶽](ht
 
 1月<br>
 ある部員はPHPの勉強を始めた<br>
-PC部はwebコンの審査をどんどん通過していった。<br>
+PC部はwebコンの審査を次々と通過していった。<br>
 最後の審査に向けて、ページの英訳やその他最終調整をした。<br>
 
 2月<br>
 ある部員はRaspberry Pi(先述)が家にあるのを思い出し、発掘して使い出した。<br>
-写真: そのRaspberry Pi(かなり古いタイプのもの)<br>
+写真: そのRaspberry Pi(小学生の時に買ったもの)<br>
 <img src="./Assets/bj_raspi.jpeg" alt="bjのラズパイ" width="50%">
 
 音展のために買い替えようと思ったが半導体不足で新しいものが販売されておらず買えなかった。<br>
@@ -236,6 +226,53 @@ webコンで<span style="color:orange;">金賞</span>をとった。<br>
         <td><img src="./Assets/terebitou.jpg" alt="さっぽろテレビ塔" width="100%"></td>
     </tr>
 </table>
+
+7月<br>
+夏休みに入り、ある部員は掲示板を完成させた。<br>
+写真: 掲示板のイメージ画像<br>
+<img src="./Assets/2chan.png" alt="2ちゃん" width="50%">
+
+8月<br>
+[プログラミング甲子園](https://pckoshien.u-aizu.ac.jp/mobile/)のモバイル部門に出場することになった。ある程度の基礎は完成させた。<br>
+ある部員はVRジェットコースターの制作を始めた。VRゴーグルで流す映像を作った。<br>
+写真: 映像からの切り抜き<br>
+<img src="./Assets/vr_image.png" alt="VR映像" width="50%">
+
+PC部公式Tシャツを作った。
+写真 右:シャツの前面 左: シャツの後面<br>
+<table>
+    <tr>
+        <td><img src="./Assets/shirt_front.jpg" alt="シャツの前面" width="100%"></td>
+        <td><img src="./Assets/shirt_back.jpg" alt="シャツの後面" width="100%"></td>
+    </tr>
+</table>
+全面の「PC」は実行できるコードでできている。<br>
+写真: 出力の文字列(PC部のロゴ)<br>
+<img src="./Assets/shirt_output.png" alt="Tシャツ出力" width="50%">
+
+
+多くの部員が旅行に行った。
+
+9月<br>
+音展の準備を進めた。
+ある部員はVRジェットコースターの椅子を動かす回路を作った。<br>
+写真: 制作の様子<br>
+<img src="./Assets/vr_chair.jpg" alt="VRの回路" width="50%">
+
+ある部員は仕事がなくなったので二人で対戦できる早押しゲームを作った<br>
+写真: ゲームの画面<br>
+<img src="./Assets/hayauchi.png" alt="早打ちゲーム" width="50%">
+
+また、画像をボトルキャップで表現した時の完成イメージを出力するプログラムを書いた<br>
+写真: 出力例<br>
+<img src="./Assets/mosaic.png" alt="モザイク" width="50%">
+
+ある部員は音展の公式ホームページを作った<br>
+写真: ホーム画面<br>
+<img src="./Assets/homepage.png" alt="ホームページ" width="50%">
+
+
+
 
 
 
