@@ -19,8 +19,8 @@ VRといっても大きく分けて2種類あります。
 専用のホルダーにスマホをはめて使うものと、VRゴーグルを使うものです。
 それぞれ基本的には「3DoF」「6DoF」と呼ばれるトラッキングを採用していて、6DoFは3DoFに加えて縦横への移動にも反応してくれます。
 
-![](./Assets/vr_motion_tracking_3dof.png)
-![](./Assets/vr_motion_tracking_6dof.png)
+![](./Assets/vr_motion_tracking_3dof.png){align=left}
+![](./Assets/vr_motion_tracking_6dof.png){align=right}
 
 ジェットコースターではレールの下を覗きこむなどの動作もしたいので、今回は6DoFを使うことにしました。
 実際に触ってみると分かりますが、3DoFと6DoFでは没入感が全く違います。
