@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt update
-      - run: sudo apt install -y nodejs fonts-ipafont
+      - run: sudo apt install -y nodejs fonts-ipafont  poppler-utils
       - run: npm install -g md-to-pdf
       - run: sudo chmod +x ./assets/build-pdf.sh
       - run: ./assets/build-pdf.sh
