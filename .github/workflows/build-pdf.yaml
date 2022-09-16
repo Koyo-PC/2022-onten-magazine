@@ -10,6 +10,7 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install -y nodejs fonts-ipafont
       - run: npm install -g md-to-pdf
+      - run: sudo chmod +x ./assets/build-pdf.sh
       - run: ./assets/build-pdf.sh
       - uses: actions/upload-artifact@master
         with:
