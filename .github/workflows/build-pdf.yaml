@@ -10,8 +10,7 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install -y nodejs fonts-ipafont
       - run: npm install -g md-to-pdf
-      - run: mkdir ./out
-      - run: cat ZOI/VR_Tracker/VR_Tracker.md | md-to-pdf --md-file-encoding utf-8 --css https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css --body-class markdown-body > out/output.pdf
+      - run: ./assets/build-pdf.sh
       - uses: actions/upload-artifact@master
         with:
           name: pdf
