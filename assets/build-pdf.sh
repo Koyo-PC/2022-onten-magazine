@@ -1,6 +1,7 @@
 cd `dirname $0`
 cd ../
 mkdir out
+cp ./assets/dummy.pdf ./out/out.pdf
 mkdir tmp
 for f in `cat files.txt`
 do
