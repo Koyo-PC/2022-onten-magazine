@@ -7,28 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: sudo bash ./assets/install-pandoc.sh
-      - run: sudo bash ./assets/install-wkhtmltopdf.sh
-      - run: mkdir ./out
-      # - run: sudo bash ./assets/build-html.sh
-      # - uses: actions/upload-artifact@master
-      #   with:
-      #     name: html
-      #     path: out/
-      - run: sudo bash ./assets/build-pdf.sh
+      - run: sudo apt update
+      - run: sudo apt install -y nodejs fonts-ipafont  poppler-utils
+      - run: npm install -g md-to-pdf
+      - run: sudo chmod +x ./assets/build-pdf.sh
+      - run: ./assets/build-pdf.sh
       - uses: actions/upload-artifact@master
         with:
           name: pdf
           path: out/
-  # Build-HTML:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: sudo bash ./assets/install-pandoc.sh
-  #     - run: sudo bash ./assets/install-wkhtmltopdf.sh
-  #     - run: mkdir ./out
-  #     - run: sudo bash ./assets/build-html.sh
-  #     - uses: actions/upload-artifact@master
-  #       with:
-  #         name: html
-  #         path: out/

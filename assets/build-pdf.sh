@@ -1,17 +1,13 @@
-cp ./assets/github.css ./out/github.css
-cp ./assets/wk.css ./out/wk.css
-cp ./assets/dynoload.js ./out/dynoload.js
-cp ./assets/toc.xsl ./out/toc.xsl
-mkdir ./out/Assets
-assets=($(find ./ -name "Assets" -type d))
-for assetfolder in ${assets[@]}; do
-  cp -r $assetfolder ./out/
-done
-cd ./out/
-mdpath=($(find ../ -name "*.md"))
-for mdfile in ${mdpath[@]}; do
-  htfile=$(basename $(echo $mdfile | sed -e "s|\.md|.pdf|"))
-  echo $mdfile
-  sudo pandoc --webtex='https://latex.codecogs.com/svg.latex?' -s -i $mdfile -t html5 -c ./github.css -c ./wk.css --self-contained --pdf-engine-opt="toc" --pdf-engine-opt="--toc-header-text" --pdf-engine-opt="目次" --pdf-engine-opt="--xsl-style-sheet" --pdf-engine-opt="./toc.xsl" --pdf-engine=wkhtmltopdf -N -o $htfile
-done
+cd `dirname $0`
 cd ../
+mkdir out
+cp ./assets/dummy.pdf ./out/out.pdf
+for f in `cat files.txt`
+do
+mkdir tmp
+cat $f | md-to-pdf --md-file-encoding utf-8 --basedir `dirname $f` --css https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css --body-class markdown-body > tmp/out.pdf
+pdfunite ./out/out.pdf ./tmp/out.pdf ./out/out_marged.pdf
+rm ./out/out.pdf
+mv ./out/out_marged.pdf ./out/out.pdf
+rm -r ./tmp
+done
