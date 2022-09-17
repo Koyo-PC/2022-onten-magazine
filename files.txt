@@ -1,3 +1,5 @@
 Blackjack/HISTORY/history.md
+ZEN/Statistics_To_AI/Statistics_To_AI.md
+ZEN/PCK/PCK.md
 ZOI/Code_tutor/Code_tutor.md
 ZOI/VR_Coaster/VR_Coaster_Sample.md
