@@ -1,7 +1,7 @@
 cd `dirname $0`
 cd ../
 mkdir out
-cp ./assets/default.pdf ./out/out.pdf
+cp ./assets/front.pdf ./out/out.pdf
 for f in `cat files.txt`
 do
 mkdir tmp
@@ -11,3 +11,4 @@ rm ./out/out.pdf
 mv ./out/out_marged.pdf ./out/out.pdf
 rm -r ./tmp
 done
+pdfunite ./out/out.pdf /assets/back.pdf ./out/out_marged.pdf
