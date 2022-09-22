@@ -1,4 +1,5 @@
 Blackjack/HISTORY/history.md
 ZEN/PCK/PCK.md
 ZOI/Code_tutor/Code_tutor.md
-ZOI/VR_Coaster/VR_Coaster_Sample.md
+ZOI/VR_Star/VR_Star.md
+ZOI/VR_Coaster/VR_Coaster.md

@@ -338,9 +338,139 @@ ESP32にはUSBから5Vを、モーターにはコンセントから12Vを供給�
 というわけで流してみると普通に動きました。
 これで、USB電源は無かったことになり、いい感じに動くようになりました。
 
-// 電子工作
-//fritzing
-//パーツ
-// リレー: https://forum.fritzing.org/t/srd-05vdc-sl-c-search/11945/4
-// esp: https://ht-deko.com/delphiforum/?vasthtmlaction=viewtopic&t=1971.0#postid-3341s
-// DCジャック: https://github.com/brucetsao/fritzing-parts-1/blob/master/akizuki-DC%E3%82%B8%E3%83%A3%E3%83%83%E3%82%AF/Akizuki-Power%20plug-2.5-DIP.fzpz
+### マイコン制御
+
+ESP32に、モーターをコントロールするコードを書き込んでいきます。
+有名なマイコンボードとしてArduinoの名前を聞いたことがあることのある人もいるかもしれませんが、ESPはArduinoの仲間ではないので、Arduino用に作られたマイコン書き込みツールを使うことができません。
+しかし、誰かが「ESPに不足している機能を足してArduinoとして書き込むことができるアプリ」を作ってくれているので、これを使います。
+
+まずは、Arduino公式サイト(<https://www.arduino.cc/>)にアクセスし、Arduino IDEをインストールします。
+その後、環境設定を開き、追加のボードマネージャURLに`https://dl.espressif.com/dl/package_esp32_index.json`を追加します。
+最後に、ボードマネージャを開くとESP32が追加されているのでこれをダウンロードします。
+これで準備が出来ました。
+
+次のようなコードを書き込みます。
+
+```processing
+#include <WiFi.h>
+
+const char ssid[] = "ESP32AP-WiFi";
+const char pass[] = "esp32apwifi";
+const IPAddress ip(192, 168, 30, 3);
+const IPAddress subnet(255, 255, 255, 0);
+
+const char html[] =
+  "<!DOCTYPE html><html lang='ja'><head><meta charset='utf-8'></head><body>\
+  <a href='/?true'>正転</a><br /><a href='/?false'>逆転</a><br /><a href='/?zero'>停止</a></body></html>";
+
+WiFiServer server(80);
+
+void setup()
+{
+  Serial.begin(115200);
+
+  WiFi.softAP(ssid, pass);
+  delay(100);
+  WiFi.softAPConfig(ip, ip, subnet);
+
+  IPAddress myIP = WiFi.softAPIP();
+
+  server.begin();
+
+  Serial.print("SSID: ");
+  Serial.println(ssid);
+  Serial.print("AP IP address: ");
+  Serial.println(myIP);
+  Serial.println("Server start!");
+
+
+  pinMode(2, OUTPUT);
+  pinMode(0, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(14, OUTPUT);
+
+}
+
+void loop() {
+  WiFiClient client = server.available();
+
+  if (client) {
+    String currentLine = "";
+    Serial.println("New Client.");
+
+    while (client.connected()) {
+      if (client.available()) {
+        char c = client.read();
+        Serial.write(c);
+        if (c == '\n') {
+          if (currentLine.length() == 0) {
+            client.println("HTTP/1.1 200 OK");
+            client.println("Content-type:text/html");
+            client.println();
+
+            client.print(html);
+            client.println();
+            break;
+          } else {
+            currentLine = "";
+          }
+        } else if (c != '\r') {
+          currentLine += c;
+        }
+
+        if (currentLine.endsWith("GET /?true")) {
+          digitalWrite(0, LOW);
+          digitalWrite(2, HIGH);
+          digitalWrite(12, HIGH);
+          digitalWrite(14, LOW);
+        }
+        if (currentLine.endsWith("GET /?false")) {
+          digitalWrite(2, LOW);
+          digitalWrite(0, HIGH);
+          digitalWrite(12, LOW);
+          digitalWrite(14, HIGH);
+        }
+        if (currentLine.endsWith("GET /?zero")) {
+          digitalWrite(0, LOW);
+          digitalWrite(2, LOW);
+          digitalWrite(12, LOW);
+          digitalWrite(14, LOW);
+        }
+      }
+    }
+    client.stop();
+    Serial.println("Client Disconnected.");
+  }
+}
+```
+
+はい。
+いつも通りクソコード臭がしますね...
+やってることは簡単で、ESP32をルーターとして起動し、アクセスしたURLに応じてIO出力を変えているだけです。
+これをモータードライバにつければうまいこと動きます。
+
+...動くはずでした。
+
+## ★死亡★
+
+ここからUnityに対応させようと、Unity側のコードにHTTPリクエストのコードを書いて、急な回転方向の変化は反応してくれないなーとか思っていたんですが、終わりは思いもよらぬ方向からやってきました。
+
+時は音展前日、指導部による最終チェックが入る1時間前...
+UnityのHTTP送信タイミングを開始からの秒数で指定していて、そこを調整していた時だったんですが、電源を繋げた瞬間 **ESP32が火を吹きました**。
+な… 何を言っているのか わからねーと思うが おれも 何をされたのか わからなかった…
+
+まあ原因はある程度目処がついています。
+しばらく(1Hくらい)電源を外していて付けた瞬間に出火したというタイミングと、出火場所が先ほど話した3端子レギュレータだったことから、きっと電圧が一瞬15Vをオーバーしてしまったのでしょう。
+というのも、使っていたACアダプターがAmazonで最も安い、中華の極みのような製品だったのです。
+元々コンセントに入れるたびに火花を散らすすごいやつだったんですが、まさか出力が定格オーバーするとは...
+
+どこかがショートしたのか、個体差なのかわからなかったためもう一方にも刺して見たところ全く同じように炎上したので、この時点で椅子を動かす野望は潰えました。
+あと1時間って時に部品燃やすのはもはや芸術の域ですね。
+炎上部品は教室前に展示することとします。
+
+## あとがき
+
+うーーん、あまりにもひどい終わり方です。
+本当に申し訳ありません...!
+一応「VR」「ジェットコースター」の2本柱が折れなかったので企画としては成立できるのが不幸中の幸いですね。
+映像だけでもかなり酔うそうなので、まだ遊んでいない人はぜひ!
